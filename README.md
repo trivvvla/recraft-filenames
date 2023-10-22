@@ -49,12 +49,13 @@ A Python script to organize and standardize music file names stored in a specifi
 ## Usage
 
 1. Navigate to the project's main directory.
-2. Run the `main.py` script:
+2. Update your config file if necessary.
+3. Run the `main.py` script:
    ```bash
    python main.py
    ```
 
-3. Follow the on-screen prompts to select and execute the desired features.
+4. Follow the on-screen prompts to select and execute the desired features.
 
 ## License
 
