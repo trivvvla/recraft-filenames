@@ -35,7 +35,8 @@ def move(src, dst):
 def process_files(data, auto_rename):
     if not auto_rename:
         for i, row in enumerate(data):
-            user_input = input(format_output.format_prompt(i, data, row))
+            relative_path = os.path.relpath(row[0], config.MUSIC_PATH)
+            user_input = input(format_output.format_prompt(i, data, row, relative_path))
             if user_input.lower() in ("", "y"):
                 rename_file(row)
             else:
@@ -44,4 +45,5 @@ def process_files(data, auto_rename):
     else:
         for row in data:
             rename_file(row)
+
 

@@ -25,7 +25,10 @@ def feature_multiple_spaces(path=config.MUSIC_PATH, auto_rename=False):
 
     if not auto_rename:
         for i, row in enumerate(data):
-            user_input = input(format_output.format_prompt(i, data, row))
+            # Extract relative path to supply as an argument to format_prompt
+            relative_path = format_output.extract_last_two_dirs(row[0])
+            
+            user_input = input(format_output.format_prompt(i, data, row, relative_path))
             if user_input.lower() in ("", "y"):
                 file_operations.rename_file(row)
             else:

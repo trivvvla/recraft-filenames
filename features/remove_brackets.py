@@ -17,7 +17,7 @@ def feature_remove_brackets(auto_rename=False, path=config.MUSIC_PATH):
             if re.search(bracket_pattern, file):
                 new_filename = re.sub(bracket_pattern, '', file).strip()
                 data.append([
-                    os.path.basename(root),
+                    root,
                     file,
                     "remove_brackets",
                     new_filename,
@@ -28,12 +28,12 @@ def feature_remove_brackets(auto_rename=False, path=config.MUSIC_PATH):
         for i, row in enumerate(data):
             user_input = input(format_output.format_prompt(i, data, row))
             if user_input.lower() in ("", "y"):
-                file_operations.rename_file(row, root)
+                file_operations.rename_file(row)
             else:
                 row[4] = format_output.format_status("Skipped")
 
         print(format_output.format_data(data))
     else:
         for row in data:
-            file_operations.rename_file(row, root)
+            file_operations.rename_file(row)
 

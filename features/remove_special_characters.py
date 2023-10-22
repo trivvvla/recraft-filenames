@@ -23,6 +23,6 @@ def feature_remove_special_characters(path=config.MUSIC_PATH, auto_rename=False)
                     "Pending"
                 ])
 
-    process_files(data, auto_rename)
+    file_operations.process_files(data, auto_rename)
 
 

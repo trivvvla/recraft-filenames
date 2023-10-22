@@ -34,10 +34,10 @@ def format_data(data):
 
     return formatted_output.rstrip()
 
-def format_prompt(i, data, row):
+def format_prompt(i, data, row, relative_path):
     """Formats the prompt for user input."""
-    current_file = f"🔳 {row[1]}"
-    new_file = f"⬜ {row[3]}"
+    current_file = f"🔳 {relative_path}/{row[1]}"
+    new_file = f"⬜ {relative_path}/{row[3]}"
     return (
         f"{current_file}\n{new_file}\n"
         f"{colored(i+1, 'cyan')} / {colored(len(data), 'cyan')} | ? (y/n) [y] "
@@ -50,4 +50,3 @@ def format_status(status):
         "Skipped": colored("✗", "red"),
     }
     return status_map.get(status, status)
-
