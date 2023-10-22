@@ -2,6 +2,7 @@ import os
 import importlib
 from utilities import file_operations
 from config import *
+from termcolor import colored
 
 FEATURES_DIR = "features"
 FEATURE_PREFIX = "feature_"  # Prefix for the function in each feature module
@@ -17,16 +18,18 @@ feature_modules = [
 
 def confirm_directories():
     """Display the working directory and its subdirectories, allowing users to exclude some."""
-    print(f"Current working directory: {MUSIC_PATH}\n")
-    
+    print("\n" + colored('➜ DIRECTORIES SELECTION', 'green').center(60, '-'))
+    print(f"{colored('Current working directory:', 'blue')} {MUSIC_PATH}\n")
+
     subdirs = [dir_name for dir_name in os.listdir(MUSIC_PATH) if os.path.isdir(os.path.join(MUSIC_PATH, dir_name)) and dir_name not in IGNORE_DIRS]
+    
     if not subdirs:
         print("No additional subdirectories found.")
         return
 
-    print("List of subdirectories:")
+    print(colored('List of subdirectories:', 'blue'))
     for idx, dir_name in enumerate(subdirs, 1):
-        print(f"{idx}. {dir_name}")
+        print(f"{colored(str(idx), 'yellow')}. {dir_name}")
     print("\nEnter the numbers of the directories you wish to exclude (comma separated), or press enter to continue without excluding any:")
 
     excluded_dirs = input().strip().split(',')
@@ -37,16 +40,17 @@ def confirm_directories():
             # In case the input number isn't valid, we simply ignore it.
             pass
 
-    print(f"\nExcluded directories: {IGNORE_DIRS}\n")
+    print(f"Excluded directories: {colored(IGNORE_DIRS, 'red')}\n")
 
 def display_menu():
     """Display the available operations."""
-    print("\nPlease choose an operation:")
+    print("\n" + colored('➜ FEATURE SELECTION', 'green').center(60, '-'))
+    print("Please choose an operation:")
     for idx, module in enumerate(feature_modules, 1):
         # Assuming each feature module has a `__doc__` string describing its purpose
-        print(f"{idx}. {module.__doc__}")
-    print(f"{len(feature_modules) + 1}. Run all features")
-    print(f"{len(feature_modules) + 2}. Exit")
+        print(f"{colored(str(idx), 'yellow')}. {module.__doc__}")
+    print(f"{colored(str(len(feature_modules) + 1), 'yellow')}. Run all features")
+    print(f"{colored(str(len(feature_modules) + 2), 'yellow')}. Exit")
 
 def main():
     confirm_directories()
@@ -54,7 +58,7 @@ def main():
     while True:
         display_menu()
         try:
-            choice = int(input(f"Enter your choice (1-{len(feature_modules) + 2}): "))
+            choice = int(input(f"\nEnter your choice (1-{len(feature_modules) + 2}): "))
 
             if choice == len(feature_modules) + 1:  # Run all features
                 for module in feature_modules:
@@ -67,9 +71,9 @@ def main():
             elif choice == len(feature_modules) + 2:  # Exit
                 break
             else:
-                print("Invalid choice. Please select from the menu.")
+                print(colored("\nInvalid choice. Please select from the menu.", 'red'))
         except ValueError:
-            print("Invalid input. Please select a number from the menu.")
+            print(colored("\nInvalid input. Please select a number from the menu.", 'red'))
 
 if __name__ == "__main__":
     main()
