@@ -2,22 +2,12 @@
 
 import os
 import re
-from utilities import file_operations
+from utilities.features_utils import process_files
 import config
 
+def modify_sanitize_filename(filename):
+    sanitized_file = re.sub(r"^[ -]+|[ -]+$", "", filename)
+    return sanitized_file if sanitized_file != filename else None
+
 def feature_sanitize_filenames(path=config.MUSIC_PATH, auto_rename=False):
-    data = []
-
-    for root, _, files in os.walk(path):
-        for file in files:
-            sanitized_file = re.sub(r"^[ -]+|[ -]+$", "", file)
-            if sanitized_file != file:
-                data.append([
-                    root,
-                    file,
-                    "sanitize_filename",
-                    sanitized_file,
-                    "Pending"
-                ])
-
-    file_operations.process_files(data, auto_rename)
+    process_files(modify_sanitize_filename, "sanitize_filename", path, auto_rename)

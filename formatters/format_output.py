@@ -7,15 +7,20 @@ def extract_last_two_dirs(path):
     parts = path.rstrip('/').split('/')
     return '/'.join(parts[-2:]) if len(parts) > 1 else parts[0]
 
-def format_data(data):
+def format_data(data, feature_name):
     """Formats the data into a table."""
     grouped_data = defaultdict(list)
+
+    for row in data:
+        folder_path = extract_last_two_dirs(row[0])
+        grouped_data[folder_path].append(row)
+
     modified_files_count = sum(1 for row in data if row[3] == "Replaced")
 
-    banner = f"🎉 Processed Files: {len(data)} | Modified Files: {modified_files_count} 🎉"
-    banner_separator = "-" * len(banner)
+    banner = f"🛠️ {feature_name}\n🎉 Processed Files: {len(data)} | Modified Files: {modified_files_count} 🎉"
+    banner_separator = "-" * max(len(banner), 40)
 
-    formatted_output = "\n" + banner_separator + "\n" + banner + "\n"
+    formatted_output = "\n" + banner_separator + "\n" + banner + "\n" + banner_separator + "\n"
 
     folder_colors = ["blue", "yellow", "red", "green", "purple", "orange", "brown"]
     current_color_index = 0
@@ -24,11 +29,11 @@ def format_data(data):
         formatted_output += f"{colored('📁', folder_colors[current_color_index])} {folder}\n"
         for file in files:
             status = file[3]
-            formatted_output += f"{colored('🟨', folder_colors[current_color_index])} Current: {file[0]}\n"
+            formatted_output += f"{colored('🟨', folder_colors[current_color_index])} Current: {file[1]}\n"
             if status == "Replaced":
                 formatted_output += f"✅ New:      {file[2]}\n\n"
             else:
-                formatted_output += f"❌ New:      {file[0]}\n\n"
+                formatted_output += f"❌ New:      {file[1]}\n\n"
 
         current_color_index = (current_color_index + 1) % len(folder_colors)
 
