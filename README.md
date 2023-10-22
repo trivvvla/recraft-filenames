@@ -32,7 +32,7 @@ A Python script to organize and standardize music file names stored in a specifi
 1. **Clone the Repository**:
    ```bash
    git clone https://github.com/[your_username]/recraft-filename.git
-   cd recraft-filename
+   cd recraft-filename/scripts
    ```
 
 2. **Set Up a Virtual Environment (optional but recommended)**:
